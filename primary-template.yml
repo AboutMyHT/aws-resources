@@ -24,11 +24,12 @@ Resources:
             OriginAccessControlId: ""
             ConnectionAttempts: 3
             OriginCustomHeaders: []
-            DomainName: !Join ["", [!Ref "DomainName", ".s3.amazonaws.com"]]
+            DomainName:
+              !Join ["", ["www.", !Ref "DomainName", ".s3.amazonaws.com"]]
             OriginShield:
               Enabled: false
             OriginPath: ""
-            Id: !Join ["", [!Ref "DomainName", ".s3.amazonaws.com"]]
+            Id: !Join ["", ["www.", !Ref "DomainName", ".s3.amazonaws.com"]]
             CustomOriginConfig:
               OriginKeepaliveTimeout: 5
               OriginReadTimeout: 30
@@ -58,7 +59,8 @@ Resources:
             - GET
           LambdaFunctionAssociations: []
           SmoothStreaming: false
-          TargetOriginId: !Join ["", [!Ref "DomainName", ".s3.amazonaws.com"]]
+          TargetOriginId:
+            !Join ["", ["www.", !Ref "DomainName", ".s3.amazonaws.com"]]
           ViewerProtocolPolicy: redirect-to-https
           CachePolicyId:
             Ref: aboutmyhometownCloudFrontCachePolicy
@@ -148,7 +150,7 @@ Resources:
       PolicyDocument:
         Version: 2012-10-17
         Statement:
-          - Resource: !Join ["", ["arn:aws:s3:::", !Ref "DomainName", /*]]
+          - Resource: !Join ["", ["arn:aws:s3:::www.", !Ref "DomainName", /*]]
             Action: "s3:GetObject"
             Effect: Allow
             Principal:

@@ -1,87 +1,5 @@
-Metadata:
-  TemplateId: >-
-    arn:aws:cloudformation:us-east-2:211125302470:generatedTemplate/c4203234-2d30-4fbb-b952-0d56e7be35f1
-  "AWS::CloudFormation::Designer":
-    1e31e534-9bb6-4f76-a058-e16a53c94e6f:
-      size:
-        width: 150
-        height: 150
-      position:
-        x: 70
-        "y": 300
-      z: 1
-      embeds: []
-    c05d39ec-5a2b-481c-8978-1907f88f523c:
-      size:
-        width: 150
-        height: 150
-      position:
-        x: 60
-        "y": 90
-      z: 1
-      embeds: []
-    dbd3440f-e7b0-4809-8749-ad23c4d81f23:
-      size:
-        width: 60
-        height: 60
-      position:
-        x: 480
-        "y": 300
-      z: 1
-      embeds: []
-    c368da38-e0fc-485e-9cc5-50eb30c9b6e6:
-      size:
-        width: 60
-        height: 60
-      position:
-        x: 480
-        "y": 410
-      z: 1
-      embeds: []
-    a1008612-9f94-4644-bdbe-51ad2325bea0:
-      size:
-        width: 60
-        height: 60
-      position:
-        x: 300
-        "y": 300
-      z: 1
-      embeds: []
-    a812908a-178f-4b47-8bca-a1f67162bf95:
-      size:
-        width: 60
-        height: 60
-      position:
-        x: 480
-        "y": 50
-      z: 1
-      embeds: []
-    bdb0db6f-6197-44ab-9baa-c1ae0e9fde55:
-      size:
-        width: 60
-        height: 60
-      position:
-        x: 480
-        "y": 210
-      z: 1
-      embeds: []
-      dependson:
-        - dbd3440f-e7b0-4809-8749-ad23c4d81f23
-        - a1008612-9f94-4644-bdbe-51ad2325bea0
-    57cb561f-1216-442d-8318-b911b28726f2:
-      source:
-        id: bdb0db6f-6197-44ab-9baa-c1ae0e9fde55
-      target:
-        id: dbd3440f-e7b0-4809-8749-ad23c4d81f23
-      z: 11
-    9ab2e672-c81b-4cce-8a75-e187ddeeacb2:
-      source:
-        id: bdb0db6f-6197-44ab-9baa-c1ae0e9fde55
-      target:
-        id: a1008612-9f94-4644-bdbe-51ad2325bea0
-      z: 12
 Resources:
-  CloudFrontDistribution00E3E0HI25KEVZJJ00wjshB:
+  CloudFrontDistribution:
     UpdateReplacePolicy: Retain
     Type: "AWS::CloudFront::Distribution"
     DeletionPolicy: Retain
@@ -135,7 +53,7 @@ Resources:
           TargetOriginId: www.aboutmyhometown.com.s3.us-east-2.amazonaws.com
           ViewerProtocolPolicy: redirect-to-https
           CachePolicyId:
-            Ref: CloudFrontCachePolicy00658327eaf89d4faba63d7e88639e58f600r04Pc
+            Ref: CloudFrontCachePolicy
           TrustedSigners: []
           FieldLevelEncryptionId: ""
         Staging: false
@@ -156,14 +74,12 @@ Resources:
             Locations: []
             RestrictionType: none
         CacheBehaviors: []
-    Metadata:
-      "AWS::CloudFormation::Designer":
-        id: bdb0db6f-6197-44ab-9baa-c1ae0e9fde55
     DependsOn:
-      - S3Bucket00wwwaboutmyhometowncom00r48wl
+      - aboutmyhometownS3Bucket
       - >-
         Route53ResolverResolverRuleAssociation00rslvrautodefinedassocvpc0086e5a996d8fb4d5internetresolver00UKqf1
-  CloudFrontCachePolicy00658327eaf89d4faba63d7e88639e58f600r04Pc:
+
+  CloudFrontCachePolicy:
     UpdateReplacePolicy: Retain
     Type: "AWS::CloudFront::CachePolicy"
     DeletionPolicy: Retain
@@ -183,22 +99,17 @@ Resources:
           EnableAcceptEncodingGzip: true
         DefaultTTL: 86400
         Name: Managed-CachingOptimized
-    Metadata:
-      "AWS::CloudFormation::Designer":
-        id: a812908a-178f-4b47-8bca-a1f67162bf95
   ? Route53ResolverResolverRuleAssociation00rslvrautodefinedassocvpc0086e5a996d8fb4d5internetresolver00UKqf1
   : UpdateReplacePolicy: Retain
     Type: "AWS::Route53Resolver::ResolverRuleAssociation"
     DeletionPolicy: Retain
     Properties:
       VPCId:
-        Ref: EC2VPC00vpc0086e5a996d8fb4d500Ea5nj
+        Ref: PrimaryVPC
       ResolverRuleId: rslvr-autodefined-rr-internet-resolver
       Name: System Rule Association
-    Metadata:
-      "AWS::CloudFormation::Designer":
-        id: a1008612-9f94-4644-bdbe-51ad2325bea0
-  S3Bucket00wwwaboutmyhometowncom00r48wl:
+
+  aboutmyhometownS3Bucket:
     UpdateReplacePolicy: Retain
     Type: "AWS::S3::Bucket"
     DeletionPolicy: Retain
@@ -220,10 +131,8 @@ Resources:
           - BucketKeyEnabled: true
             ServerSideEncryptionByDefault:
               SSEAlgorithm: AES256
-    Metadata:
-      "AWS::CloudFormation::Designer":
-        id: dbd3440f-e7b0-4809-8749-ad23c4d81f23
-  EC2VPC00vpc0086e5a996d8fb4d500Ea5nj:
+
+  PrimaryVPC:
     UpdateReplacePolicy: Retain
     Type: "AWS::EC2::VPC"
     DeletionPolicy: Retain
@@ -233,16 +142,14 @@ Resources:
       InstanceTenancy: default
       EnableDnsHostnames: true
       Tags: []
-    Metadata:
-      "AWS::CloudFormation::Designer":
-        id: c05d39ec-5a2b-481c-8978-1907f88f523c
-  S3BucketPolicy00wwwaboutmyhometowncom00twypc:
+
+  aboutmyhometownS3BucketPolicy:
     UpdateReplacePolicy: Retain
     Type: "AWS::S3::BucketPolicy"
     DeletionPolicy: Retain
     Properties:
       Bucket:
-        Ref: S3Bucket00wwwaboutmyhometowncom00r48wl
+        Ref: aboutmyhometownS3Bucket
       PolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -251,10 +158,8 @@ Resources:
             Effect: Allow
             Principal: "*"
             Sid: AllowPublicReadAccess
-    Metadata:
-      "AWS::CloudFormation::Designer":
-        id: c368da38-e0fc-485e-9cc5-50eb30c9b6e6
-  Route53HostedZone00Z08857421M0V3LME5K73800nQMBx:
+
+  aboutmyhometownRoute53HostedZone:
     UpdateReplacePolicy: Retain
     Type: "AWS::Route53::HostedZone"
     DeletionPolicy: Retain
@@ -263,6 +168,3 @@ Resources:
       HostedZoneConfig:
         Comment: HostedZone created by Route53 Registrar
       Name: aboutmyhometown.com.
-    Metadata:
-      "AWS::CloudFormation::Designer":
-        id: 1e31e534-9bb6-4f76-a058-e16a53c94e6f

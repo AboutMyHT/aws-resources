@@ -1,0 +1,14 @@
+digraph "template" {
+PrimaryCloudFront [color=black, label="PrimaryCloudFront\n<AWS::CloudFront::Distribution>", shape=ellipse, type=Resource];
+aboutmyhometownS3Bucket [color=black, label="aboutmyhometownS3Bucket\n<AWS::S3::Bucket>", shape=ellipse, type=Resource];
+Route53ResolverResolverRuleAssociation [color=black, label="Route53ResolverResolverRuleAssociation\n<AWS::Route53Resolver::ResolverRuleAssociation>", shape=ellipse, type=Resource];
+CloudFrontCachePolicy [color=black, label="CloudFrontCachePolicy\n<AWS::CloudFront::CachePolicy>", shape=ellipse, type=Resource];
+PrimaryEC2VPC [color=black, label="PrimaryEC2VPC\n<AWS::EC2::VPC>", shape=ellipse, type=Resource];
+aboutmyhometownS3BucketPolicy [color=black, label="aboutmyhometownS3BucketPolicy\n<AWS::S3::BucketPolicy>", shape=ellipse, type=Resource];
+Route53HostedZone [color=black, label="Route53HostedZone\n<AWS::Route53::HostedZone>", shape=ellipse, type=Resource];
+PrimaryCloudFront -> aboutmyhometownS3Bucket  [color=black, key=0, label=DependsOn, source_paths="['DependsOn']"];
+PrimaryCloudFront -> Route53ResolverResolverRuleAssociation  [color=black, key=0, label=DependsOn, source_paths="['DependsOn']"];
+PrimaryCloudFront -> CloudFrontCachePolicy  [color=black, key=0, label=Ref, source_paths="['Properties', 'DistributionConfig', 'DefaultCacheBehavior', 'CachePolicyId']"];
+Route53ResolverResolverRuleAssociation -> PrimaryEC2VPC  [color=black, key=0, label=Ref, source_paths="['Properties', 'VPCId']"];
+aboutmyhometownS3BucketPolicy -> aboutmyhometownS3Bucket  [color=black, key=0, label=Ref, source_paths="['Properties', 'Bucket']"];
+}

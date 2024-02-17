@@ -50,7 +50,7 @@ Resources:
             - GET
           LambdaFunctionAssociations: []
           SmoothStreaming: false
-          TargetOriginId: www.aboutmyhometown.com.s3.us-east-2.amazonaws.com
+          TargetOriginId: www.aboutmyhometown.com.s3.amazonaws.com
           ViewerProtocolPolicy: redirect-to-https
           CachePolicyId:
             Ref: aboutmyhometownCloudFrontCachePolicy

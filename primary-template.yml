@@ -6,6 +6,10 @@ Parameters:
     Description: The DNS name for the website
     AllowedPattern: (?!-)[a-zA-Z0-9-.]{1,63}(?<!-)
     ConstraintDescription: must be a valid DNS zone name.
+  AcmCertificateArn:
+    Type: String
+    Description: the Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate.
+    AllowedPattern: "arn:aws:acm:.*"
 Resources:
   aboutmyhometownCloudFrontDistribution:
     Type: "AWS::CloudFront::Distribution"
@@ -44,8 +48,7 @@ Resources:
         ViewerCertificate:
           MinimumProtocolVersion: TLSv1.2_2021
           SslSupportMethod: sni-only
-          AcmCertificateArn: >-
-            arn:aws:acm:us-east-1:211125302470:certificate/eab948a5-95f3-4cb9-aeb8-af6b9e549934
+          AcmCertificateArn: !Ref AcmCertificateArn
         PriceClass: PriceClass_100
         DefaultCacheBehavior:
           Compress: true

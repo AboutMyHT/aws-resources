@@ -1,7 +1,7 @@
 Resources:
   aboutmyhometownCloudFrontDistribution:
-    UpdateReplacePolicy: Retain
     Type: "AWS::CloudFront::Distribution"
+    UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
     Properties:
       DistributionConfig:
@@ -78,8 +78,8 @@ Resources:
       - aboutmyhometownS3Bucket
 
   aboutmyhometownCloudFrontCachePolicy:
-    UpdateReplacePolicy: Retain
     Type: "AWS::CloudFront::CachePolicy"
+    UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
     Properties:
       CachePolicyConfig:
@@ -98,9 +98,21 @@ Resources:
         DefaultTTL: 86400
         Name: aboutmyhometownCachingOptimized
 
-  aboutmyhometownS3Bucket:
+  aboutmyhometownCloudFrontOriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
     UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Properties:
+      OriginAccessControlConfig:
+        Description: The origin access control for the CloudFront distribution
+        Name: aboutmyhometownOACConfig
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  aboutmyhometownS3Bucket:
     Type: "AWS::S3::Bucket"
+    UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
     Properties:
       PublicAccessBlockConfiguration:
@@ -119,8 +131,8 @@ Resources:
               SSEAlgorithm: AES256
 
   aboutmyhometownS3BucketPolicy:
-    UpdateReplacePolicy: Retain
     Type: "AWS::S3::BucketPolicy"
+    UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
     Properties:
       Bucket:
@@ -131,12 +143,16 @@ Resources:
           - Resource: "arn:aws:s3:::www.aboutmyhometown.com/*"
             Action: "s3:GetObject"
             Effect: Allow
-            Principal: "*"
-            Sid: AllowPublicReadAccess
+            Principal:
+              Service: "cloudfront.amazonaws.com"
+            Condition:
+              StringEquals:
+                AWS:SourceArn: arn:aws:cloudfront::211125302470:distribution/EFFYXM2DDQBI
+            Sid: AllowCloudFrontServicePrincipalReadOnly
 
   aboutmyhometownRoute53HostedZone:
-    UpdateReplacePolicy: Retain
     Type: "AWS::Route53::HostedZone"
+    UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
     Properties:
       HostedZoneConfig:
@@ -146,8 +162,9 @@ Resources:
       - aboutmyhometownCloudFrontDistribution
 
   aboutmyhometownRecordSetGroup:
-    UpdateReplacePolicy: Retain
     Type: AWS::Route53::RecordSetGroup
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
     Properties:
       HostedZoneName: aboutmyhometown.com.
       RecordSets:
@@ -158,8 +175,8 @@ Resources:
             DNSName: !GetAtt [aboutmyhometownCloudFrontDistribution, DomainName]
 
   PrimaryVPC:
-    UpdateReplacePolicy: Retain
     Type: "AWS::EC2::VPC"
+    UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
     Properties:
       CidrBlock: 172.31.0.0/16

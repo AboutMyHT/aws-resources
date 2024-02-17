@@ -138,7 +138,7 @@ Resources:
             Sid: AllowPublicReadAccess
 
   aboutmyhometownRoute53HostedZone:
-    UpdateReplacePolicy: Retain
+    UpdateReplacePolicy: Delete
     Type: "AWS::Route53::HostedZone"
     DeletionPolicy: Retain
     Properties:
@@ -147,6 +147,7 @@ Resources:
       Name: aboutmyhometown.com.
 
   aboutmyhometownRecordSets:
+    UpdateReplacePolicy: Delete
     Type: AWS::Route53::RecordSetGroup
     Properties:
       HostedZoneName: aboutmyhometown.com.

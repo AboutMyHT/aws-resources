@@ -157,7 +157,7 @@ Resources:
               Service: "cloudfront.amazonaws.com"
             Condition:
               StringEquals:
-                AWS:SourceArn: arn:aws:cloudfront::211125302470:distribution/EFFYXM2DDQBI
+                AWS:SourceArn: !Sub "arn:aws:cloudfront::${AWS::Region}:distribution/${aboutmyhometownCloudFrontDistribution}"
             Sid: AllowCloudFrontServicePrincipalReadOnly
 
   aboutmyhometownRoute53HostedZone:

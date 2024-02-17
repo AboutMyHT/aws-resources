@@ -98,7 +98,7 @@ Resources:
             CookieBehavior: none
           EnableAcceptEncodingGzip: true
         DefaultTTL: 86400
-        Name: Managed-CachingOptimized
+        Name: Unmanaged-CachingOptimized
   ? Route53ResolverResolverRuleAssociation00rslvrautodefinedassocvpc0086e5a996d8fb4d5internetresolver00UKqf1
   : UpdateReplacePolicy: Retain
     Type: "AWS::Route53Resolver::ResolverRuleAssociation"

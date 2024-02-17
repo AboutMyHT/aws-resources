@@ -155,11 +155,16 @@ Resources:
     Properties:
       HostedZoneName: aboutmyhometown.com.
       RecordSets:
-        - Name: aboutmyhometown.com
+        - Name: www.aboutmyhometown.com
           Type: A
           AliasTarget:
             HostedZoneId: Z2FDTNDATAQYW2
             DNSName: !GetAtt [aboutmyhometownCloudFrontDistribution, DomainName]
+        - Name: aboutmyhometown.com
+          Type: A
+          AliasTarget:
+            HostedZoneId: Z2FDTNDATAQYW2
+            DNSName: www.aboutmyhometown.com.
 
   PrimaryVPC:
     UpdateReplacePolicy: Retain

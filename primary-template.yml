@@ -136,6 +136,30 @@ Resources:
             Effect: Allow
             Principal: "*"
             Sid: AllowPublicReadAccess
+
+  aboutmyhometownRoute53HostedZone:
+    UpdateReplacePolicy: Delete
+    Type: "AWS::Route53::HostedZone"
+    DeletionPolicy: Retain
+    Properties:
+      HostedZoneConfig:
+        Comment: HostedZone created by Route53 Registrar
+      Name: aboutmyhometown.com.
+    DependsOn:
+      - aboutmyhometownCloudFrontDistribution
+
+  aboutmyhometownRecordSetGroup:
+    UpdateReplacePolicy: Delete
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneName: aboutmyhometown.com.
+      RecordSets:
+        - Name: www.aboutmyhometown.com
+          Type: A
+          AliasTarget:
+            HostedZoneId: Z2FDTNDATAQYW2
+            DNSName: !GetAtt [aboutmyhometownCloudFrontDistribution, DomainName]
+
   PrimaryVPC:
     UpdateReplacePolicy: Retain
     Type: "AWS::EC2::VPC"

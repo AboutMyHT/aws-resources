@@ -179,13 +179,17 @@ Resources:
     UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
     Properties:
-      HostedZoneName: !Join ["", [!Ref "DomainName", .]]
+      HostedZoneName: !Join ["", ["www.", !Ref "DomainName"]]
       RecordSets:
         - Name: !Ref "DomainName"
           Type: A
           AliasTarget:
             HostedZoneId: Z2FDTNDATAQYW2
             DNSName: !GetAtt [aboutmyhometownCloudFrontDistribution, DomainName]
+        - Name: !Join ["", [!Ref "DomainName", .]]
+          Type: CNAME
+          ResourceRecords:
+            - !Join ["", ["www.", !Ref "DomainName"]]
 
   PrimaryVPC:
     Type: "AWS::EC2::VPC"

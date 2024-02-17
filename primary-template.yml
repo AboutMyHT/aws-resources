@@ -16,11 +16,11 @@ Resources:
             OriginAccessControlId: ""
             ConnectionAttempts: 3
             OriginCustomHeaders: []
-            DomainName: www.aboutmyhometown.com.s3-website.us-east-2.amazonaws.com
+            DomainName: www.aboutmyhometown.com.s3.amazonaws.com
             OriginShield:
               Enabled: false
             OriginPath: ""
-            Id: www.aboutmyhometown.com.s3.us-east-2.amazonaws.com
+            Id: www.aboutmyhometown.com.s3.amazonaws.com
             CustomOriginConfig:
               OriginKeepaliveTimeout: 5
               OriginReadTimeout: 30

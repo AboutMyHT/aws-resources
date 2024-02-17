@@ -136,16 +136,6 @@ Resources:
             Effect: Allow
             Principal: "*"
             Sid: AllowPublicReadAccess
-
-  aboutmyhometownRoute53HostedZone:
-    UpdateReplacePolicy: Delete
-    Type: "AWS::Route53::HostedZone"
-    DeletionPolicy: Retain
-    Properties:
-      HostedZoneConfig:
-        Comment: HostedZone created by Route53 Registrar
-      Name: aboutmyhometown.com.
-
   PrimaryVPC:
     UpdateReplacePolicy: Retain
     Type: "AWS::EC2::VPC"

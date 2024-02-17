@@ -77,7 +77,7 @@ Resources:
     DependsOn:
       - aboutmyhometownS3Bucket
       - >-
-        Route53ResolverResolverRuleAssociation00rslvrautodefinedassocvpc0086e5a996d8fb4d5internetresolver00UKqf1
+        aboutmyhometownRoute53ResolverRuleAssociation
 
   aboutmyhometownCloudFrontCachePolicy:
     UpdateReplacePolicy: Retain
@@ -98,16 +98,17 @@ Resources:
             CookieBehavior: none
           EnableAcceptEncodingGzip: true
         DefaultTTL: 86400
-        Name: Unmanaged-CachingOptimized
-  ? Route53ResolverResolverRuleAssociation00rslvrautodefinedassocvpc0086e5a996d8fb4d5internetresolver00UKqf1
-  : UpdateReplacePolicy: Retain
+        Name: aboutmyhometownCachingOptimized
+
+  aboutmyhometownRoute53ResolverRuleAssociation:
+    UpdateReplacePolicy: Retain
     Type: "AWS::Route53Resolver::ResolverRuleAssociation"
     DeletionPolicy: Retain
     Properties:
       VPCId:
         Ref: PrimaryVPC
       ResolverRuleId: rslvr-autodefined-rr-internet-resolver
-      Name: System Rule Association
+      Name: Route53 Rule Association
 
   aboutmyhometownS3Bucket:
     UpdateReplacePolicy: Retain

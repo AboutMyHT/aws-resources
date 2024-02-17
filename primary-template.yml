@@ -188,6 +188,7 @@ Resources:
             DNSName: !GetAtt [aboutmyhometownCloudFrontDistribution, DomainName]
         - Name: !Ref "DomainName"
           Type: CNAME
+          TTL: "900"
           ResourceRecords:
             - !Join ["", ["www.", !Ref "DomainName"]]
 

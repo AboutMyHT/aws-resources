@@ -1,5 +1,5 @@
 Resources:
-  CloudFrontDistribution:
+  aboutmyhometownCloudFrontDistribution:
     UpdateReplacePolicy: Retain
     Type: "AWS::CloudFront::Distribution"
     DeletionPolicy: Retain
@@ -53,7 +53,7 @@ Resources:
           TargetOriginId: www.aboutmyhometown.com.s3.us-east-2.amazonaws.com
           ViewerProtocolPolicy: redirect-to-https
           CachePolicyId:
-            Ref: CloudFrontCachePolicy
+            Ref: aboutmyhometownCloudFrontCachePolicy
           TrustedSigners: []
           FieldLevelEncryptionId: ""
         Staging: false
@@ -79,7 +79,7 @@ Resources:
       - >-
         Route53ResolverResolverRuleAssociation00rslvrautodefinedassocvpc0086e5a996d8fb4d5internetresolver00UKqf1
 
-  CloudFrontCachePolicy:
+  aboutmyhometownCloudFrontCachePolicy:
     UpdateReplacePolicy: Retain
     Type: "AWS::CloudFront::CachePolicy"
     DeletionPolicy: Retain
@@ -132,17 +132,6 @@ Resources:
             ServerSideEncryptionByDefault:
               SSEAlgorithm: AES256
 
-  PrimaryVPC:
-    UpdateReplacePolicy: Retain
-    Type: "AWS::EC2::VPC"
-    DeletionPolicy: Retain
-    Properties:
-      CidrBlock: 172.31.0.0/16
-      EnableDnsSupport: true
-      InstanceTenancy: default
-      EnableDnsHostnames: true
-      Tags: []
-
   aboutmyhometownS3BucketPolicy:
     UpdateReplacePolicy: Retain
     Type: "AWS::S3::BucketPolicy"
@@ -168,3 +157,14 @@ Resources:
       HostedZoneConfig:
         Comment: HostedZone created by Route53 Registrar
       Name: aboutmyhometown.com.
+
+  PrimaryVPC:
+    UpdateReplacePolicy: Retain
+    Type: "AWS::EC2::VPC"
+    DeletionPolicy: Retain
+    Properties:
+      CidrBlock: 172.31.0.0/16
+      EnableDnsSupport: true
+      InstanceTenancy: default
+      EnableDnsHostnames: true
+      Tags: []

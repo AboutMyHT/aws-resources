@@ -186,6 +186,10 @@ Resources:
           AliasTarget:
             HostedZoneId: Z2FDTNDATAQYW2
             DNSName: !GetAtt [aboutmyhometownCloudFrontDistribution, DomainName]
+        - Name: !Ref "DomainName"
+          Type: CNAME
+          ResourceRecords:
+            - !Join ["", ["www.", !Ref "DomainName"]]
 
   PrimaryVPC:
     Type: "AWS::EC2::VPC"

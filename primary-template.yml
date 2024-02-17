@@ -179,14 +179,14 @@ Resources:
     UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
     Properties:
-      HostedZoneName: !Join ["", ["www.", !Ref "DomainName"]]
+      HostedZoneName: !Join ["", [!Ref "DomainName", .]]
       RecordSets:
-        - Name: !Ref "DomainName"
+        - Name: !Join ["", ["www.", !Ref "DomainName"]]
           Type: A
           AliasTarget:
             HostedZoneId: Z2FDTNDATAQYW2
             DNSName: !GetAtt [aboutmyhometownCloudFrontDistribution, DomainName]
-        - Name: !Join ["", [!Ref "DomainName", .]]
+        - Name: !Ref "DomainName"
           Type: CNAME
           ResourceRecords:
             - !Join ["", ["www.", !Ref "DomainName"]]

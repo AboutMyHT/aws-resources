@@ -1,0 +1,164 @@
+---
+Metadata:
+  TemplateId: "arn:aws:cloudformation:us-east-2:211125302470:generatedTemplate/c4203234-2d30-4fbb-b952-0d56e7be35f1"
+Resources:
+  CloudFrontDistribution00E3E0HI25KEVZJJ00wjshB:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::CloudFront::Distribution"
+    DeletionPolicy: "Retain"
+    Properties:
+      DistributionConfig:
+        Logging:
+          IncludeCookies: false
+          Bucket: ""
+          Prefix: ""
+        Comment: ""
+        DefaultRootObject: "index.html"
+        Origins:
+        - ConnectionTimeout: 10
+          OriginAccessControlId: ""
+          ConnectionAttempts: 3
+          OriginCustomHeaders: []
+          DomainName: "www.aboutmyhometown.com.s3-website.us-east-2.amazonaws.com"
+          OriginShield:
+            Enabled: false
+          OriginPath: ""
+          Id: "www.aboutmyhometown.com.s3.us-east-2.amazonaws.com"
+          CustomOriginConfig:
+            OriginKeepaliveTimeout: 5
+            OriginReadTimeout: 30
+            OriginSSLProtocols:
+            - "SSLv3"
+            - "TLSv1"
+            - "TLSv1.1"
+            - "TLSv1.2"
+            HTTPSPort: 443
+            HTTPPort: 80
+            OriginProtocolPolicy: "http-only"
+        ViewerCertificate:
+          MinimumProtocolVersion: "TLSv1.2_2021"
+          SslSupportMethod: "sni-only"
+          CloudFrontDefaultCertificate: false
+          AcmCertificateArn: "arn:aws:acm:us-east-1:211125302470:certificate/eab948a5-95f3-4cb9-aeb8-af6b9e549934"
+        PriceClass: "PriceClass_100"
+        DefaultCacheBehavior:
+          Compress: true
+          TrustedKeyGroups: []
+          FunctionAssociations: []
+          AllowedMethods:
+          - "HEAD"
+          - "GET"
+          CachedMethods:
+          - "HEAD"
+          - "GET"
+          LambdaFunctionAssociations: []
+          SmoothStreaming: false
+          TargetOriginId: "www.aboutmyhometown.com.s3.us-east-2.amazonaws.com"
+          ViewerProtocolPolicy: "redirect-to-https"
+          CachePolicyId:
+            Ref: "CloudFrontCachePolicy00658327eaf89d4faba63d7e88639e58f600r04Pc"
+          TrustedSigners: []
+          FieldLevelEncryptionId: ""
+        Staging: false
+        CustomErrorResponses: []
+        ContinuousDeploymentPolicyId: ""
+        OriginGroups:
+          Quantity: 0
+          Items: []
+        Enabled: true
+        Aliases:
+        - "aboutmyhometown.com"
+        - "www.aboutmyhometown.com"
+        IPV6Enabled: true
+        WebACLId: ""
+        HttpVersion: "http2and3"
+        Restrictions:
+          GeoRestriction:
+            Locations: []
+            RestrictionType: "none"
+        CacheBehaviors: []
+  CloudFrontCachePolicy00658327eaf89d4faba63d7e88639e58f600r04Pc:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::CloudFront::CachePolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      CachePolicyConfig:
+        Comment: "Policy with caching enabled. Supports Gzip and Brotli compression."
+        MinTTL: 1
+        MaxTTL: 3.1536E7
+        ParametersInCacheKeyAndForwardedToOrigin:
+          QueryStringsConfig:
+            QueryStringBehavior: "none"
+          EnableAcceptEncodingBrotli: true
+          HeadersConfig:
+            HeaderBehavior: "none"
+          CookiesConfig:
+            CookieBehavior: "none"
+          EnableAcceptEncodingGzip: true
+        DefaultTTL: 86400
+        Name: "Managed-CachingOptimized"
+  Route53ResolverResolverRuleAssociation00rslvrautodefinedassocvpc0086e5a996d8fb4d5internetresolver00UKqf1:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Route53Resolver::ResolverRuleAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      VPCId:
+        Ref: "EC2VPC00vpc0086e5a996d8fb4d500Ea5nj"
+      ResolverRuleId: "rslvr-autodefined-rr-internet-resolver"
+      Name: "System Rule Association"
+  S3Bucket00wwwaboutmyhometowncom00r48wl:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::S3::Bucket"
+    DeletionPolicy: "Retain"
+    Properties:
+      WebsiteConfiguration:
+        IndexDocument: "index.html"
+        ErrorDocument: "index.html"
+      PublicAccessBlockConfiguration:
+        RestrictPublicBuckets: false
+        IgnorePublicAcls: false
+        BlockPublicPolicy: false
+        BlockPublicAcls: false
+      BucketName: "www.aboutmyhometown.com"
+      OwnershipControls:
+        Rules:
+        - ObjectOwnership: "BucketOwnerPreferred"
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - BucketKeyEnabled: true
+          ServerSideEncryptionByDefault:
+            SSEAlgorithm: "AES256"
+  EC2VPC00vpc0086e5a996d8fb4d500Ea5nj:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VPC"
+    DeletionPolicy: "Retain"
+    Properties:
+      CidrBlock: "172.31.0.0/16"
+      EnableDnsSupport: true
+      InstanceTenancy: "default"
+      EnableDnsHostnames: true
+      Tags: []
+  S3BucketPolicy00wwwaboutmyhometowncom00twypc:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::S3::BucketPolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      Bucket:
+        Ref: "S3Bucket00wwwaboutmyhometowncom00r48wl"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource: "arn:aws:s3:::www.aboutmyhometown.com/*"
+          Action: "s3:GetObject"
+          Effect: "Allow"
+          Principal: "*"
+          Sid: "AllowPublicReadAccess"
+  Route53HostedZone00Z08857421M0V3LME5K73800nQMBx:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Route53::HostedZone"
+    DeletionPolicy: "Retain"
+    Properties:
+      VPCs: []
+      HostedZoneConfig:
+        Comment: "HostedZone created by Route53 Registrar"
+      Name: "aboutmyhometown.com."

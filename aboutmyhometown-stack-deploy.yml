@@ -1,3 +1,3 @@
 template-file-path: primary-template.yml
-parameters: {}
+parameters: { "DomainName": "aboutmyhometown.com" }
 tags: {}

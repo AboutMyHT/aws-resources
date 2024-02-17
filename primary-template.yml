@@ -1,3 +1,11 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Create all of the resources neccesary for the aboutmyhometown.com website. This does no include a few resources like registered domains and ACM certificates.
+Parameters:
+  DomainName:
+    Type: String
+    Description: The DNS name for the website
+    AllowedPattern: (?!-)[a-zA-Z0-9-.]{1,63}(?<!-)
+    ConstraintDescription: must be a valid DNS zone name.
 Resources:
   aboutmyhometownCloudFrontDistribution:
     Type: "AWS::CloudFront::Distribution"
@@ -16,11 +24,11 @@ Resources:
             OriginAccessControlId: ""
             ConnectionAttempts: 3
             OriginCustomHeaders: []
-            DomainName: www.aboutmyhometown.com.s3.amazonaws.com
+            DomainName: !Join ["", [!Ref "DomainName", ".s3.amazonaws.com"]]
             OriginShield:
               Enabled: false
             OriginPath: ""
-            Id: www.aboutmyhometown.com.s3.amazonaws.com
+            Id: !Join ["", [!Ref "DomainName", ".s3.amazonaws.com"]]
             CustomOriginConfig:
               OriginKeepaliveTimeout: 5
               OriginReadTimeout: 30
@@ -50,7 +58,7 @@ Resources:
             - GET
           LambdaFunctionAssociations: []
           SmoothStreaming: false
-          TargetOriginId: www.aboutmyhometown.com.s3.amazonaws.com
+          TargetOriginId: !Join ["", [!Ref "DomainName", ".s3.amazonaws.com"]]
           ViewerProtocolPolicy: redirect-to-https
           CachePolicyId:
             Ref: aboutmyhometownCloudFrontCachePolicy
@@ -64,8 +72,8 @@ Resources:
           Items: []
         Enabled: true
         Aliases:
-          - aboutmyhometown.com
-          - www.aboutmyhometown.com
+          - !Ref "DomainName"
+          - !Join ["", ["www.", !Ref "DomainName"]]
         IPV6Enabled: true
         WebACLId: ""
         HttpVersion: http2and3
@@ -120,7 +128,7 @@ Resources:
         IgnorePublicAcls: true
         BlockPublicPolicy: true
         BlockPublicAcls: true
-      BucketName: www.aboutmyhometown.com
+      BucketName: !Join ["", ["www.", !Ref "DomainName"]]
       OwnershipControls:
         Rules:
           - ObjectOwnership: BucketOwnerPreferred
@@ -140,7 +148,7 @@ Resources:
       PolicyDocument:
         Version: 2012-10-17
         Statement:
-          - Resource: "arn:aws:s3:::www.aboutmyhometown.com/*"
+          - Resource: !Join ["", ["arn:aws:s3:::", !Ref "DomainName", /*]]
             Action: "s3:GetObject"
             Effect: Allow
             Principal:
@@ -157,7 +165,7 @@ Resources:
     Properties:
       HostedZoneConfig:
         Comment: HostedZone created by Route53 Registrar
-      Name: aboutmyhometown.com.
+      Name: !Join ["", [!Ref "DomainName", .]]
     DependsOn:
       - aboutmyhometownCloudFrontDistribution
 
@@ -166,9 +174,9 @@ Resources:
     UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
     Properties:
-      HostedZoneName: aboutmyhometown.com.
+      HostedZoneName: !Join ["", [!Ref "DomainName", .]]
       RecordSets:
-        - Name: aboutmyhometown.com
+        - Name: !Ref "DomainName"
           Type: A
           AliasTarget:
             HostedZoneId: Z2FDTNDATAQYW2

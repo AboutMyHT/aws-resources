@@ -103,9 +103,6 @@ Resources:
     Type: "AWS::S3::Bucket"
     DeletionPolicy: Retain
     Properties:
-      WebsiteConfiguration:
-        IndexDocument: index.html
-        ErrorDocument: index.html
       PublicAccessBlockConfiguration:
         RestrictPublicBuckets: false
         IgnorePublicAcls: false
@@ -138,7 +135,7 @@ Resources:
             Sid: AllowPublicReadAccess
 
   aboutmyhometownRoute53HostedZone:
-    UpdateReplacePolicy: Delete
+    UpdateReplacePolicy: Retain
     Type: "AWS::Route53::HostedZone"
     DeletionPolicy: Retain
     Properties:
@@ -149,7 +146,7 @@ Resources:
       - aboutmyhometownCloudFrontDistribution
 
   aboutmyhometownRecordSetGroup:
-    UpdateReplacePolicy: Delete
+    UpdateReplacePolicy: Retain
     Type: AWS::Route53::RecordSetGroup
     Properties:
       HostedZoneName: aboutmyhometown.com.

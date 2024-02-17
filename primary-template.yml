@@ -146,7 +146,7 @@ Resources:
         Comment: HostedZone created by Route53 Registrar
       Name: aboutmyhometown.com.
 
-  aboutmyhometownRecordSetGroup:
+  aboutmyhometownRecordSets:
     Type: AWS::Route53::RecordSetGroup
     Properties:
       HostedZoneName: aboutmyhometown.com.

@@ -26,6 +26,8 @@ Resources:
             OriginAccessControlId: !Ref aboutmyhometownCloudFrontOriginAccessControl
             ConnectionTimeout: 10
             ConnectionAttempts: 3
+            S3OriginConfig:
+              OriginAccessIdentity: ""
         ViewerCertificate:
           MinimumProtocolVersion: TLSv1.2_2021
           SslSupportMethod: sni-only

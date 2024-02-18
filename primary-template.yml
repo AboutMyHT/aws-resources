@@ -17,34 +17,16 @@ Resources:
     DeletionPolicy: Retain
     Properties:
       DistributionConfig:
-        Logging:
-          IncludeCookies: false
-          Bucket: ""
-          Prefix: ""
-        Comment: ""
+        Comment: "The primary distribution for the web application"
         DefaultRootObject: index.html
         Origins:
-          - ConnectionTimeout: 10
-            OriginAccessControlId: ""
-            ConnectionAttempts: 3
-            OriginCustomHeaders: []
+          - Id: !Join ["", ["www.", !Ref "DomainName", ".s3.amazonaws.com"]]
             DomainName:
               !Join ["", ["www.", !Ref "DomainName", ".s3.amazonaws.com"]]
-            OriginShield:
-              Enabled: false
-            OriginPath: ""
-            Id: !Join ["", ["www.", !Ref "DomainName", ".s3.amazonaws.com"]]
-            CustomOriginConfig:
-              OriginKeepaliveTimeout: 5
-              OriginReadTimeout: 30
-              OriginSSLProtocols:
-                - SSLv3
-                - TLSv1
-                - TLSv1.1
-                - TLSv1.2
-              HTTPSPort: 443
-              HTTPPort: 80
-              OriginProtocolPolicy: http-only
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${aboutmyhometownCloudFrontOriginAccessControl}"
+            ConnectionTimeout: 10
+            ConnectionAttempts: 3
         ViewerCertificate:
           MinimumProtocolVersion: TLSv1.2_2021
           SslSupportMethod: sni-only
@@ -67,26 +49,12 @@ Resources:
           ViewerProtocolPolicy: redirect-to-https
           CachePolicyId:
             Ref: aboutmyhometownCloudFrontCachePolicy
-          TrustedSigners: []
-          FieldLevelEncryptionId: ""
-        Staging: false
-        CustomErrorResponses: []
-        ContinuousDeploymentPolicyId: ""
-        OriginGroups:
-          Quantity: 0
-          Items: []
         Enabled: true
         Aliases:
           - !Ref "DomainName"
           - !Join ["", ["www.", !Ref "DomainName"]]
         IPV6Enabled: true
-        WebACLId: ""
         HttpVersion: http2and3
-        Restrictions:
-          GeoRestriction:
-            Locations: []
-            RestrictionType: none
-        CacheBehaviors: []
     DependsOn:
       - aboutmyhometownS3Bucket
 

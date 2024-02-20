@@ -24,7 +24,7 @@ Resources:
             DomainName:
               !Join ["", ["www.", !Ref "DomainName", ".s3.amazonaws.com"]]
             OriginAccessControlId: !Ref aboutmyhometownCloudFrontOriginAccessControl
-            ConnectionTimeout: 100
+            ConnectionTimeout: 10
             ConnectionAttempts: 3
             S3OriginConfig:
               OriginAccessIdentity: ""

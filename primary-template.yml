@@ -154,7 +154,7 @@ Resources:
         IgnorePublicAcls: true
         BlockPublicPolicy: true
         BlockPublicAcls: true
-      BucketName: !Join ["", ["www.", !Ref "DomainName"]]
+      BucketName: !Join ["", ["www.", !Ref "DomainName", "-lambda"]]
       OwnershipControls:
         Rules:
           - ObjectOwnership: BucketOwnerPreferred

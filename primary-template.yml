@@ -10,7 +10,19 @@ Parameters:
     Type: String
     Description: the Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate.
     AllowedPattern: "arn:aws:acm:.*"
+
 Resources:
+  PrimaryVPC:
+    Type: "AWS::EC2::VPC"
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Properties:
+      CidrBlock: 172.31.0.0/16
+      EnableDnsSupport: true
+      InstanceTenancy: default
+      EnableDnsHostnames: true
+      Tags: []
+
   aboutmyhometownCloudFrontDistribution:
     Type: "AWS::CloudFront::Distribution"
     UpdateReplacePolicy: Retain
@@ -161,13 +173,26 @@ Resources:
             HostedZoneId: Z05567953GIEW3X3P58TA
             DNSName: !Join ["", ["www.", !Ref "DomainName"]]
 
-  PrimaryVPC:
-    Type: "AWS::EC2::VPC"
-    UpdateReplacePolicy: Retain
-    DeletionPolicy: Retain
+  aboutmyhometownMySQLDB:
+    Type: "AWS::RDS::DBInstance"
+    UpdateReplacePolicy: "Retain"
+    DeletionPolicy: "Retain"
     Properties:
-      CidrBlock: 172.31.0.0/16
-      EnableDnsSupport: true
-      InstanceTenancy: default
-      EnableDnsHostnames: true
-      Tags: []
+      StorageEncrypted: true
+      PreferredBackupWindow: "04:12-04:42"
+      DBParameterGroupName: "default.mysql8.0"
+      NetworkType: "IPV4"
+      Engine: "mysql"
+      LicenseModel: "general-public-license"
+      EngineVersion: "8.0.35"
+      StorageType: "gp2"
+      DBInstanceClass: "db.t3.micro"
+      OptionGroupName: "default:mysql-8-0"
+      PreferredMaintenanceWindow: "mon:03:39-mon:04:09"
+      AutoMinorVersionUpgrade: true
+      DBInstanceIdentifier: "aboutmyhometown-mysql-db"
+      AllocatedStorage: "20"
+      MasterUsername: "admin"
+      ManageMasterUserPassword: false
+      MaxAllocatedStorage: 1000
+      BackupRetentionPeriod: 1

@@ -193,6 +193,16 @@ Resources:
       DBInstanceIdentifier: "aboutmyhometown-mysql-db"
       AllocatedStorage: "20"
       MasterUsername: "admin"
-      ManageMasterUserPassword: false
+      MasterUserPassword: "iDontKnowHowToHideThisPassword741"
       MaxAllocatedStorage: 1000
       BackupRetentionPeriod: 1
+
+  aboutmyhometownMySQLDBOptionGroup:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::RDS::OptionGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      OptionGroupDescription: "Default option group for mysql 8.0"
+      OptionGroupName: "default:mysql-8-0"
+      MajorEngineVersion: "8.0"
+      EngineName: "mysql"

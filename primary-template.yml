@@ -187,7 +187,7 @@ Resources:
       EngineVersion: "8.0.35"
       StorageType: "gp2"
       DBInstanceClass: "db.t3.micro"
-      OptionGroupName: "default:mysql-8-0"
+      OptionGroupName: "mysql-8-0"
       PreferredMaintenanceWindow: "mon:03:39-mon:04:09"
       AutoMinorVersionUpgrade: true
       DBInstanceIdentifier: "aboutmyhometown-mysql-db"
@@ -203,6 +203,6 @@ Resources:
     DeletionPolicy: "Retain"
     Properties:
       OptionGroupDescription: "Default option group for mysql 8.0"
-      OptionGroupName: "default:mysql-8-0"
+      OptionGroupName: "mysql-8-0"
       MajorEngineVersion: "8.0"
       EngineName: "mysql"

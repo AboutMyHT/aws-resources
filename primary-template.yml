@@ -144,6 +144,36 @@ Resources:
                 AWS:SourceArn: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${aboutmyhometownCloudFrontDistribution}"
             Sid: AllowCloudFrontServicePrincipalReadOnly
 
+  aboutmyhometownLambdaS3Bucket:
+    Type: "AWS::S3::Bucket"
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Properties:
+      PublicAccessBlockConfiguration:
+        RestrictPublicBuckets: true
+        IgnorePublicAcls: true
+        BlockPublicPolicy: true
+        BlockPublicAcls: true
+      BucketName: !Join ["", ["www.", !Ref "DomainName"]]
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerPreferred
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - BucketKeyEnabled: true
+            ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+  aboutmyhometownLambdaS3BucketPolicy:
+    Type: "AWS::S3::BucketPolicy"
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Properties:
+      Bucket:
+        Ref: aboutmyhometownLambdaS3Bucket
+      PolicyDocument:
+        Version: 2012-10-17
+
   aboutmyhometownRoute53HostedZone:
     Type: "AWS::Route53::HostedZone"
     UpdateReplacePolicy: Retain

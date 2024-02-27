@@ -10,6 +10,9 @@ Parameters:
     Type: String
     Description: the Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate.
     AllowedPattern: "arn:aws:acm:.*"
+  ServerlessRestApiID:
+    Type: String
+    Description: the ID of the API gateway endpoints
 
 Resources:
   PrimaryVPC:
@@ -40,6 +43,13 @@ Resources:
             ConnectionAttempts: 3
             S3OriginConfig:
               OriginAccessIdentity: ""
+          - Id: "APIOrigin"
+            DomainName: !Sub "${ServerlessRestApiID}.execute-api.${AWS::Region}.amazonaws.com"
+            ConnectionTimeout: 10
+            ConnectionAttempts: 3
+            CustomOriginConfig:
+              HTTPSPort: 443
+              OriginProtocolPolicy: https-only
         ViewerCertificate:
           MinimumProtocolVersion: TLSv1.2_2021
           SslSupportMethod: sni-only
@@ -52,9 +62,11 @@ Resources:
           AllowedMethods:
             - HEAD
             - GET
+            - POST
           CachedMethods:
             - HEAD
             - GET
+            - POST
           LambdaFunctionAssociations: []
           SmoothStreaming: false
           TargetOriginId:

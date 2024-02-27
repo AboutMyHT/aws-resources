@@ -172,7 +172,12 @@ Resources:
       Bucket:
         Ref: aboutmyhometownLambdaS3Bucket
       PolicyDocument:
-        Version: 2012-10-17
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Deny
+            Principal: "*"
+            Action: "*"
+            Resource: "*"
 
   aboutmyhometownRoute53HostedZone:
     Type: "AWS::Route53::HostedZone"

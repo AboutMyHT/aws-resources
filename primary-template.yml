@@ -10,6 +10,10 @@ Parameters:
     Type: String
     Description: the Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate.
     AllowedPattern: "arn:aws:acm:.*"
+  APIAcmCertificateArn:
+    Type: String
+    Description: the Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate, for API endpoints
+    AllowedPattern: "arn:aws:acm:.*"
   ServerlessRestApiID:
     Type: String
     Description: the ID of the API gateway endpoints
@@ -179,8 +183,8 @@ Resources:
   aboutmyhometownApiGatewayDomainName:
     Type: AWS::ApiGateway::DomainName
     Properties:
-      CertificateArn: !Ref AcmCertificateArn
-      DomainName: !Join ["", ["www.", !Ref "DomainName"]]
+      CertificateArn: !Ref APIAcmCertificateArn
+      DomainName: !Join ["", ["api.", !Ref "DomainName"]]
 
   aboutmyhometownMySQLDB:
     Type: "AWS::RDS::DBInstance"

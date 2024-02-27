@@ -3,6 +3,7 @@ parameters:
   {
     "DomainName": "aboutmyhometown.com",
     "AcmCertificateArn": "arn:aws:acm:us-east-1:211125302470:certificate/eab948a5-95f3-4cb9-aeb8-af6b9e549934",
+    "APIAcmCertificateArn": "arn:aws:acm:us-east-1:211125302470:certificate/6ac4dd0e-b690-4e09-b1c0-211dddf3bef5",
     "ServerlessRestApiID": "j3dcdax959",
   }
 tags: {}

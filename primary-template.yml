@@ -174,10 +174,13 @@ Resources:
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
-          - Effect: Deny
-            Principal: "*"
-            Action: "*"
-            Resource: "*"
+          - Sid: Stmt1708994178902
+            Action: s3:*
+            Effect: Allow
+            Resource: !Join ["", ["www.", !Ref "DomainName", "-lambda"]]
+            Principal:
+              AWS:
+                - arn:aws:iam::211125302470:user/github-modifications
 
   aboutmyhometownRoute53HostedZone:
     Type: "AWS::Route53::HostedZone"

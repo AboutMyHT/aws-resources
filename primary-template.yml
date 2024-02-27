@@ -118,9 +118,9 @@ Resources:
       DomainName: !Join ["", ["api.", !Ref "DomainName"]]
 
   aboutmyhometownApiGatewayMapping:
-    Type: AWS::ApiGatewayV2::ApiMapping
+    Type: AWS::ApiGateway::BasePathMapping
     Properties:
-      ApiId: !Ref ServerlessRestApiID
+      RestApiId: !Ref ServerlessRestApiID
       DomainName: !Join ["", ["api.", !Ref "DomainName"]]
       Stage: Prod
 

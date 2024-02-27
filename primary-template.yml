@@ -121,7 +121,7 @@ Resources:
     Type: AWS::ApiGatewayV2::ApiMapping
     Properties:
       ApiId: !Ref ServerlessRestApiID
-      DomainName: !Sub ${ServerlessRestApiID}.execute-api.${AWS::Region}.amazonaws.com
+      DomainName: !Join ["", ["api.", !Ref "DomainName"]]
       Stage: Prod
 
   aboutmyhometownS3Bucket:

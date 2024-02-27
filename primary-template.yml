@@ -69,12 +69,7 @@ Resources:
             - PATCH
           CachedMethods:
             - HEAD
-            - DELETE
-            - POST
             - GET
-            - OPTIONS
-            - PUT
-            - PATCH
           LambdaFunctionAssociations: []
           SmoothStreaming: false
           TargetOriginId:

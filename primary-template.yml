@@ -117,6 +117,14 @@ Resources:
       CertificateArn: !Ref APIAcmCertificateArn
       DomainName: !Join ["", ["api.", !Ref "DomainName"]]
 
+  aboutmyhometownApiGatewayMapping:
+    Type: AWS::ApiGatewayV2::ApiMapping
+    Properties:
+      ApiId: !Ref ServerlessRestApiID
+      DomainName:
+        !GetAtt [aboutmyhometownApiGatewayDomainName, DistributionDomainName]
+      Stage: Prod
+
   aboutmyhometownS3Bucket:
     Type: "AWS::S3::Bucket"
     UpdateReplacePolicy: Retain

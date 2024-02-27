@@ -180,7 +180,7 @@ Resources:
     Type: AWS::ApiGateway::DomainName
     Properties:
       CertificateArn: !Ref AcmCertificateArn
-      DomainName: !Join ["", ["api.", !Ref "DomainName"]]
+      DomainName: !Join ["", ["www.", !Ref "DomainName"]]
 
   aboutmyhometownMySQLDB:
     Type: "AWS::RDS::DBInstance"

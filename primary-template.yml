@@ -164,24 +164,6 @@ Resources:
             ServerSideEncryptionByDefault:
               SSEAlgorithm: AES256
 
-  aboutmyhometownLambdaS3BucketPolicy:
-    Type: "AWS::S3::BucketPolicy"
-    UpdateReplacePolicy: Retain
-    DeletionPolicy: Retain
-    Properties:
-      Bucket:
-        Ref: aboutmyhometownLambdaS3Bucket
-      PolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Sid: Stmt1708994178902
-            Action: s3:*
-            Effect: Allow
-            Resource: !Join ["", ["www.", !Ref "DomainName", "-lambda"]]
-            Principal:
-              AWS:
-                - arn:aws:iam::211125302470:user/github-modifications
-
   aboutmyhometownRoute53HostedZone:
     Type: "AWS::Route53::HostedZone"
     UpdateReplacePolicy: Retain

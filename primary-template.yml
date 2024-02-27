@@ -47,9 +47,12 @@ Resources:
             DomainName: !Sub "${ServerlessRestApiID}.execute-api.${AWS::Region}.amazonaws.com"
             ConnectionTimeout: 10
             ConnectionAttempts: 3
+            OriginPath: "/Prod"
             CustomOriginConfig:
               HTTPSPort: 443
               OriginProtocolPolicy: https-only
+              OriginSSLProtocols:
+                - TLSv1.2
         ViewerCertificate:
           MinimumProtocolVersion: TLSv1.2_2021
           SslSupportMethod: sni-only

@@ -111,6 +111,12 @@ Resources:
         SigningBehavior: always
         SigningProtocol: sigv4
 
+  aboutmyhometownApiGatewayDomainName:
+    Type: AWS::ApiGateway::DomainName
+    Properties:
+      CertificateArn: !Ref APIAcmCertificateArn
+      DomainName: !Join ["", ["api.", !Ref "DomainName"]]
+
   aboutmyhometownS3Bucket:
     Type: "AWS::S3::Bucket"
     UpdateReplacePolicy: Retain
@@ -179,12 +185,15 @@ Resources:
           AliasTarget:
             HostedZoneId: Z05567953GIEW3X3P58TA
             DNSName: !Join ["", ["www.", !Ref "DomainName"]]
-
-  aboutmyhometownApiGatewayDomainName:
-    Type: AWS::ApiGateway::DomainName
-    Properties:
-      CertificateArn: !Ref APIAcmCertificateArn
-      DomainName: !Join ["", ["api.", !Ref "DomainName"]]
+        - Name: !Join ["", ["api.", !Ref "DomainName"]]
+          Type: A
+          AliasTarget:
+            HostedZoneId: Z2FDTNDATAQYW2
+            DNSName:
+              !GetAtt [
+                aboutmyhometownApiGatewayDomainName,
+                DistributionDomainName,
+              ]
 
   aboutmyhometownMySQLDB:
     Type: "AWS::RDS::DBInstance"

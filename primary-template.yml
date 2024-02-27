@@ -43,16 +43,6 @@ Resources:
             ConnectionAttempts: 3
             S3OriginConfig:
               OriginAccessIdentity: ""
-          - Id: "APIOrigin"
-            DomainName: !Sub "${ServerlessRestApiID}.execute-api.${AWS::Region}.amazonaws.com"
-            ConnectionTimeout: 10
-            ConnectionAttempts: 3
-            OriginPath: "/Prod"
-            CustomOriginConfig:
-              HTTPSPort: 443
-              OriginProtocolPolicy: https-only
-              OriginSSLProtocols:
-                - TLSv1.2
         ViewerCertificate:
           MinimumProtocolVersion: TLSv1.2_2021
           SslSupportMethod: sni-only
@@ -64,12 +54,7 @@ Resources:
           FunctionAssociations: []
           AllowedMethods:
             - HEAD
-            - DELETE
-            - POST
             - GET
-            - OPTIONS
-            - PUT
-            - PATCH
           CachedMethods:
             - HEAD
             - GET
@@ -162,26 +147,6 @@ Resources:
                 AWS:SourceArn: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${aboutmyhometownCloudFrontDistribution}"
             Sid: AllowCloudFrontServicePrincipalReadOnly
 
-  aboutmyhometownLambdaS3Bucket:
-    Type: "AWS::S3::Bucket"
-    UpdateReplacePolicy: Retain
-    DeletionPolicy: Retain
-    Properties:
-      PublicAccessBlockConfiguration:
-        RestrictPublicBuckets: true
-        IgnorePublicAcls: true
-        BlockPublicPolicy: true
-        BlockPublicAcls: true
-      BucketName: !Join ["", ["www.", !Ref "DomainName", "-lambda"]]
-      OwnershipControls:
-        Rules:
-          - ObjectOwnership: BucketOwnerPreferred
-      BucketEncryption:
-        ServerSideEncryptionConfiguration:
-          - BucketKeyEnabled: true
-            ServerSideEncryptionByDefault:
-              SSEAlgorithm: AES256
-
   aboutmyhometownRoute53HostedZone:
     Type: "AWS::Route53::HostedZone"
     UpdateReplacePolicy: Retain
@@ -210,6 +175,12 @@ Resources:
           AliasTarget:
             HostedZoneId: Z05567953GIEW3X3P58TA
             DNSName: !Join ["", ["www.", !Ref "DomainName"]]
+
+  aboutmyhometownApiGatewayDomainName:
+    Type: AWS::ApiGateway::DomainName
+    Properties:
+      CertificateArn: !Ref AcmCertificateArn
+      DomainName: !Join ["", ["api.", !Ref "DomainName"]]
 
   aboutmyhometownMySQLDB:
     Type: "AWS::RDS::DBInstance"

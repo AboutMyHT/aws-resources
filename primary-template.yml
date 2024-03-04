@@ -219,8 +219,10 @@ Resources:
       OptionGroupName: "default:mysql-8-0"
       PreferredMaintenanceWindow: "mon:03:39-mon:04:09"
       AutoMinorVersionUpgrade: true
-      DBInstanceIdentifier: "aboutmyhometown-mysql-database"
+      DBInstanceIdentifier: "aboutmyhometown-mysql-db"
       AllocatedStorage: "20"
+      MasterUsername: "admin"
+      MasterUserPassword: "iDontKnowHowToHideThisPassword741"
       EnableIAMDatabaseAuthentication: true
       MaxAllocatedStorage: 1000
       BackupRetentionPeriod: 1

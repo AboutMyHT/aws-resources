@@ -221,7 +221,6 @@ Resources:
       AutoMinorVersionUpgrade: true
       DBInstanceIdentifier: "aboutmyhometown-mysql-db"
       AllocatedStorage: "20"
-      MasterUsername: "admin"
-      MasterUserPassword: "iDontKnowHowToHideThisPassword741"
+      EnableIAMDatabaseAuthentication: true
       MaxAllocatedStorage: 1000
       BackupRetentionPeriod: 1

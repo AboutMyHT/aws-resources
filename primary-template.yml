@@ -171,6 +171,31 @@ Resources:
                 AWS:SourceArn: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${aboutmyhometownCloudFrontDistribution}"
             Sid: AllowCloudFrontServicePrincipalReadOnly
 
+  aboutmyhometownRedirectBucket:
+    Type: 'AWS::S3::Bucket'
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Properties:
+      BucketName: !Ref 'DomainName'
+      WebsiteConfiguration:
+        RedirectAllRequestsTo:
+          HostName: !Join ["", ["www.", !Ref "DomainName"]]
+          Protocol: 'https'
+
+  aboutmyhometownRedirectBucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Properties:
+      Bucket: !Ref aboutmyhometownRedirectBucket
+      PolicyDocument:
+        Statement:
+          - Action: 's3:GetObject'
+            Effect: 'Allow'
+            Resource: !Sub 'arn:aws:s3:::${aboutmyhometownRedirectBucket}/*'
+            Principal: '*'
+            Sid: 'PublicReadGetObject'
+
   aboutmyhometownRoute53HostedZone:
     Type: "AWS::Route53::HostedZone"
     UpdateReplacePolicy: Retain
@@ -187,7 +212,7 @@ Resources:
     UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
     Properties:
-      HostedZoneName: !Join ["", [!Ref "DomainName", .]]
+      HostedZoneId: !Ref aboutmyhometownRoute53HostedZone
       RecordSets:
         - Name: !Join ["", ["www.", !Ref "DomainName"]]
           Type: A
@@ -197,8 +222,8 @@ Resources:
         - Name: !Ref "DomainName"
           Type: A
           AliasTarget:
-            HostedZoneId: Z05567953GIEW3X3P58TA
-            DNSName: !Join ["", ["www.", !Ref "DomainName"]]
+            HostedZoneId: Z2O1EMRO9K5GLX
+            DNSName: !GetAtt [aboutmyhometownRedirectBucket, WebsiteURL]
         - Name: !Join ["", ["api.", !Ref "DomainName"]]
           Type: A
           AliasTarget:

@@ -208,8 +208,8 @@ Resources:
         - Name: !Ref "DomainName"
           Type: A
           AliasTarget:
-            HostedZoneId: Z2O1EMRO9K5GLX 
-            DNSName: !GetAtt [aboutmyhometownRedirectBucket, WebsiteURL]
+            HostedZoneId: Z2O1EMRO9K5GLX
+            DNSName: !Join ["", [!Ref "DomainName", ".s3-website.us-east-2.amazonaws.com"]]
         - Name: !Join ["", ["api.", !Ref "DomainName"]]
           Type: A
           AliasTarget:

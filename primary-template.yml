@@ -209,7 +209,7 @@ Resources:
           Type: A
           AliasTarget:
             HostedZoneId: Z2O1EMRO9K5GLX
-            DNSName: !GetAtt [aboutmyhometownRedirectBucket, DomainName]
+            DNSName: !GetAtt [aboutmyhometownRedirectBucket, WebsiteURL]
         - Name: !Join ["", ["api.", !Ref "DomainName"]]
           Type: A
           AliasTarget:

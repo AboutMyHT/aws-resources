@@ -212,7 +212,7 @@ Resources:
     UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
     Properties:
-      HostedZoneId: !Ref aboutmyhometownRoute53HostedZone
+      HostedZoneName: !Join ["", [!Ref "DomainName", .]]
       RecordSets:
         - Name: !Join ["", ["www.", !Ref "DomainName"]]
           Type: A

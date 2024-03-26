@@ -192,7 +192,7 @@ Resources:
         Statement:
           - Action: 's3:GetObject'
             Effect: 'Allow'
-            Resource: !Sub 'arn:aws:s3:::${aboutmyhometownRedirectBucket}/*'
+            Resource: !Join ["", ["arn:aws:s3:::", !Ref "DomainName", /*]]
             Principal: '*'
             Sid: 'PublicReadGetObject'
 
@@ -212,7 +212,7 @@ Resources:
     UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
     Properties:
-      HostedZoneName: !Join ["", [!Ref "DomainName", .]]
+      HostedZoneId: !Ref aboutmyhometownRoute53HostedZone
       RecordSets:
         - Name: !Join ["", ["www.", !Ref "DomainName"]]
           Type: A

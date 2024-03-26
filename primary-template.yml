@@ -182,19 +182,19 @@ Resources:
           HostName: !Join ["", ["www.", !Ref "DomainName"]]
           Protocol: 'https'
 
-  aboutmyhometownRedirectBucketPolicy:
-    Type: 'AWS::S3::BucketPolicy'
-    UpdateReplacePolicy: Retain
-    DeletionPolicy: Retain
-    Properties:
-      Bucket: !Ref aboutmyhometownRedirectBucket
-      PolicyDocument:
-        Statement:
-          - Action: 's3:GetObject'
-            Effect: 'Allow'
-            Resource: !Join ["", ["arn:aws:s3:::", !Ref "DomainName", /*]]
-            Principal: '*'
-            Sid: 'PublicReadGetObject'
+  # aboutmyhometownRedirectBucketPolicy:
+  #   Type: 'AWS::S3::BucketPolicy'
+  #   UpdateReplacePolicy: Retain
+  #   DeletionPolicy: Retain
+  #   Properties:
+  #     Bucket: !Ref aboutmyhometownRedirectBucket
+  #     PolicyDocument:
+  #       Statement:
+  #         - Action: 's3:GetObject'
+  #           Effect: 'Allow'
+  #           Resource: !Join ["", ["arn:aws:s3:::", !Ref "DomainName", /*]]
+  #           Principal: '*'
+  #           Sid: 'PublicReadGetObject'
 
   aboutmyhometownRoute53HostedZone:
     Type: "AWS::Route53::HostedZone"

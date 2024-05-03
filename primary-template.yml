@@ -240,7 +240,7 @@ Resources:
       DBInstanceIdentifier: "aboutmyhometown-mysql-db"
       AllocatedStorage: "20"
       MasterUsername: "admin"
-      MasterUserPassword: "iDontKnowHowToHideThisPassword741"
+      MasterUserPassword: "notarealpassword" # This is not the real password but is required to be in the template
       EnableIAMDatabaseAuthentication: true
       MaxAllocatedStorage: 1000
       BackupRetentionPeriod: 1
